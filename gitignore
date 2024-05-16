@@ -1,0 +1,20 @@
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+.vscode
+*.iml
+out
+gen
+
+
+#
+vscode/
+.sass/
+*.zip
+P1/
+P2/setup-development-environment
+P2/The-Artbox/old
+.sass-cache/
+.env*
