@@ -11,7 +11,12 @@
    > - git branch -M main 
    > - git remote add origin https://github.com/username/remote_repository.git
    > - git push -u origin main
-- [ ] Lancer la command "php [createproject.php](createproject.php) nom-projet"
+   > - ou
+   > - git remote add origin https://github.com/veroxy/base_project_from_scracth_poo.git
+   > - git branch -M main 
+   > - git push -u origin main
+
+[//]: # (- [ ] Lancer la command "php [createproject.php]&#40;createproject.php&#41; nom-projet")
 
 ## modifier l'[autoload](config/autoload.php)
 
