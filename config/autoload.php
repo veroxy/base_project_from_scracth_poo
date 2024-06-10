@@ -1,25 +1,32 @@
 <?php
-// autoload files
-//1. fonctions Utils / ft_
-//2. model class/entity
-//3. repositories
-//4. controllers
-//5. views
 
-spl_autoload_register(function ($className) {
-    if (file_exists('utils/' . $className . '.php')) {
-        require_once "utils/" . $className . '.php';
+namespace config;
+/**
+ * autoload files
+ *
+ * 1. fonctions services / ft_
+ * 2. models class/entity
+ * 3. repositories
+ * 4. controllers
+ * 5. views
+ */
+
+function autoloader($class)
+{
+    $namespaces = [
+        'services',
+        'repositories',
+        'controllers',
+        'views',
+        'views/layouts',
+        'views/layouts/templates',
+        'models',
+        ''];
+
+    foreach ($namespaces as $prefix) {
+        if (file_exists("$prefix/$class.php"))
+            require_once "$prefix/$class.php";
     }
-    if (file_exists('models/' . $className . '.php')) {
-        require_once "models/" . $className . '.php';
-    }
-    if (file_exists('repositories/' . $className . '.php')) {
-        require_once "repositories/" . $className . '.php';
-    }
-    if (file_exists('controllers/' . $className . '.php')) {
-        require_once "controllers/" . $className . '.php';
-    }
-    if (file_exists('views/' . $className . '.php')) {
-        require_once "views/" . $className . '.php';
-    }
-});
+}
+
+spl_autoload_register('config\autoloader');

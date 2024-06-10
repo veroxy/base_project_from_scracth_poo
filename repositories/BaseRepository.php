@@ -1,4 +1,5 @@
 <?php
+namespace repositories;
 
 /**
  * Classe qui permet de se connecter à la base de données.

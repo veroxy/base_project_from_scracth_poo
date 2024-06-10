@@ -36,3 +36,4 @@ autoload files
     - dossier des [layouts](views/layouts)
    > /!\ créer une model View pour pouvoir générer chaque vue
 3. parametre de bdd
+

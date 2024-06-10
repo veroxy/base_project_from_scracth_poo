@@ -1,4 +1,5 @@
 <?php
+namespace repositories;
 
 /**
  * Classe abstraite qui représente un manager. Elle récupère automatiquement le gestionnaire de base de données. 
@@ -13,6 +14,6 @@ abstract class AbstractEntityRepository {
      */
     public function __construct() 
     {
-        $this->db = DBManager::getInstance();
+        $this->db = BaseRepository::getInstance();
     }
 }
