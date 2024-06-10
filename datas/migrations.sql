@@ -1,8 +1,6 @@
-DROP DATABASE if exists 2024_oc_db;
-CREATE DATABASE 2024_oc_db;
-USE `2024_oc_db`;
-
-
+DROP DATABASE if exists base_blog;
+CREATE DATABASE base_blog;
+USE `base_blog`;
 
 -- phpMyAdmin SQL Dump
 -- version 5.2.0
@@ -24,7 +22,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données : `2024_oc_db`
+-- Base de données : `base_blog`
 --
 
 -- --------------------------------------------------------
@@ -33,6 +31,19 @@ SET time_zone = "+00:00";
 -- Structure de la table `user`
 --
 
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+                                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                                      `login` varchar(255) NOT NULL,
+                                      `password` varchar(255) NOT NULL,
+                                      `nickname` varchar(255) NOT NULL,
+                                      PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+--
+-- Structure de la table `article`
+--
 
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE IF NOT EXISTS `article` (
@@ -46,6 +57,21 @@ CREATE TABLE IF NOT EXISTS `article` (
                                          KEY `link_article_user` (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
+
+--
+-- Structure de la table `comment`
+--
+
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE IF NOT EXISTS `comment` (
+                                         `id` int(11) NOT NULL AUTO_INCREMENT,
+                                         `id_article` int(11) NOT NULL,
+                                         `pseudo` varchar(255) NOT NULL,
+                                         `content` text NOT NULL,
+                                         `date_creation` datetime NOT NULL,
+                                         PRIMARY KEY (`id`),
+                                         KEY `link_comment_article` (`id_article`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Contraintes pour les tables déchargées
@@ -62,6 +88,14 @@ ALTER TABLE `article`
 ALTER TABLE `comment`
     ADD CONSTRAINT `link_comment_article` FOREIGN KEY (`id_article`) REFERENCES `article` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
+
+
+--
+-- ajout de la colonne view
+--
+ALTER TABLE `article`
+    ADD column `views` INT default 0;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
