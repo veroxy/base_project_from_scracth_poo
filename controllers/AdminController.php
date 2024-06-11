@@ -1,54 +1,55 @@
 <?php
 
+use repositories\ArticleRepository;
 use repositories\UserRepository;
 
 //use Article;
 //use ArticleRepository;
 //use CommentRepository;
-//use UserManager;
+//use UserRepository;
 
 /**
  * Contrôleur de la partie admin.
  */
 class AdminController
 {
-    public function welcome()
+    /**
+     * Affiche le profile utilisateur Connecté
+     * @return void
+     */
+    public function showProfile()
     {
-        // On affiche la page d'administration.
-        $view = new View("Welcome");
-        $view->render("welcome", []);
+
+        // On vérifie que l'utilisateur est connecté.
+//        $this->checkIfUserIsConnected(); TOFIXED
+
+        // On récupère les articles.
+        $userRepo = new UserRepository();
+        $user     = $userRepo->getUserById(1);
+
+        $view = new View('Profile');
+        $view->render('profile', ['user' => $user]);
     }
 
     /**
      * Affiche la page d'administration.
      * @return void
      */
-    public function showAdmin(): void
+    public
+    function showAdmin(): void
     {
         // On vérifie que l'utilisateur est connecté.
-        $this->checkIfUserIsConnected();
+//        $this->checkIfUserIsConnected(); TOFIXED
 
         // On récupère les articles.
         $articleRepository = new ArticleRepository();
-        $articles       = $articleRepository->getAllArticles();
+        $articles          = $articleRepository->getAllArticles();
 
         // On affiche la page d'administration.
         $view = new View("Administration");
         $view->render("administration", [
             'articles' => $articles
         ]);
-    }
-
-    /**
-     * Vérifie que l'utilisateur est connecté.
-     * @return void
-     */
-    private function checkIfUserIsConnected(): void
-    {
-        // On vérifie que l'utilisateur est connecté.
-        if (!isset($_SESSION['user'])) {
-            Utils::redirect("connectionForm");
-        }
     }
 
     /**
@@ -68,9 +69,10 @@ class AdminController
     public function connectUser(): void
     {
         // On récupère les données du formulaire.
-        $login    = Utils::request("login");
+        $login    = Utils::request("username");
         $password = Utils::request("password");
 
+        var_dump($login, $password);
         // On vérifie que les données sont valides.
         if (empty($login) || empty($password)) {
             throw new Exception("Tous les champs sont obligatoires. 1");
@@ -78,7 +80,7 @@ class AdminController
 
         // On vérifie que l'utilisateur existe.
         $userRepository = new UserRepository();
-        $user        = $userRepository->getUserByLogin($login);
+        $user           = $userRepository->getUserByLogin($login);
         if (!$user) {
             throw new Exception("L'utilisateur demandé n'existe pas.");
         }
@@ -94,7 +96,56 @@ class AdminController
         $_SESSION['idUser'] = $user->getId();
 
         // On redirige vers la page d'administration.
-        Utils::redirect("admin");
+        Utils::redirect("administration");
+    }
+
+    /**
+     * /**
+     * Affichage du formulaire de connexion.
+     * @return void
+     */
+    public function displaySuscribeForm(): void
+    {
+        $view = new View("Inscription");
+        $view->render("suscribeForm");
+    }
+
+    /**
+     * Connexion de l'utilisateur.
+     * @return void
+     */
+    public function suscribeUser(): void
+    {
+
+        // On récupère les données du formulaire.
+        $username = Utils::request("username");
+        $email    = Utils::request("email");
+        $password = Utils::request("password");
+        // On vérifie que les données sont valides.
+        if (empty($username) || empty($email) || empty($password)) {
+            throw new Exception("Tous les champs sont obligatoires. 1");
+        }
+
+        // On crée l'objet User.
+        $user = new User([
+            'username' => $username,
+            'email' => $email,
+            'password' => $password
+        ]);
+
+        // On vérifie que l'utilisateur n'existe pas déjà.
+        $userRepository = new UserRepository();
+        $entity         = $userRepository->addUser($user);
+        if (!$entity) {
+            throw new Exception("Une erreur est survenue lors de l'ajout de l'uilisateur ");
+        }
+
+        // On connecte l'utilisateur.
+        $_SESSION['user']   = $user;
+        $_SESSION['idUser'] = $entity->getId();
+
+        // On redirige vers la page d'administration.
+        Utils::redirect("administration");
     }
 
     /**
@@ -116,19 +167,19 @@ class AdminController
      */
     public function showUpdateArticleForm(): void
     {
-        $this->checkIfUserIsConnected();
+//        $this->checkIfUserIsConnected(); TOFIXED
 
         // On récupère l'id de l'article s'il existe.
         $id = Utils::request("id", -1);
 
         // On récupère l'article associé.
         $articleRepository = new ArticleRepository();
-        $article        = $articleRepository->getArticleById($id);
+        $article           = $articleRepository->getArticleById($id);
 
 
-        // Si l'article n'existe pas, on en crée un vide. 
+        // Si l'article n'existe pas, on en crée un vide.
         if (!$article) {
-            $article = new Article();
+            $article = new Article;
         }
 
 
@@ -145,8 +196,8 @@ class AdminController
      * @return void
      */
     public function updateArticle(): void
-    {
-        $this->checkIfUserIsConnected();
+    {//        $this->checkIfUserIsConnected(); TOFIXED
+
 
         // On récupère les données du formulaire.
         $id      = Utils::request("id", -1);
@@ -171,9 +222,8 @@ class AdminController
         $articleRepository->addOrUpdateArticle($article);
 
         // On redirige vers la page d'administration.
-        Utils::redirect("admin");
+        Utils::redirect("administration");
     }
-
 
     /**
      * Suppression d'un article.
@@ -181,7 +231,8 @@ class AdminController
      */
     public function deleteArticle(): void
     {
-        $this->checkIfUserIsConnected();
+//        $this->checkIfUserIsConnected(); TOFIXED
+
 
         $id = Utils::request("id", -1);
 
@@ -190,17 +241,18 @@ class AdminController
         $articleRepository->deleteArticle($id);
 
         // On redirige vers la page d'administration.
-        Utils::redirect("admin");
+        Utils::redirect("administration");
     }
-
 
     /**
      * Suppression d'un comment.
      * @return void
      */
-    public function deleteComment(): void
+    public
+    function deleteComment(): void
     {
-        $this->checkIfUserIsConnected();
+//        $this->checkIfUserIsConnected(); TOFIXED
+
 
         $id = Utils::request("id", -1);
         // On supprime l'article.
@@ -208,21 +260,35 @@ class AdminController
         $commentRepository->deleteComment($id);
 
         // On redirige vers la page d'administration.
-        Utils::redirect("admin");
+        Utils::redirect("administration");
     }
 
-    public function orderBy(): void
+    public
+    function orderBy(): void
     {
-        $this->checkIfUserIsConnected();
+//        $this->checkIfUserIsConnected(); TOFIXED
+
         $order = Utils::request("order", 'ASC');
         $col   = Utils::request("col", 'title');
 
         $articleRepository = new ArticleRepository();
-        $articles       = $articleRepository->orderBy($col, $order);
-        $view           = new View("Administration");
-        $view->render("admin", [
+        $articles          = $articleRepository->orderBy($col, $order);
+        $view              = new View("Administration");
+        $view->render("administration", [
             'articles' => $articles
         ]);
+    }
+
+    /**
+     * Vérifie que l'utilisateur est connecté.
+     * @return void
+     */
+    private function checkIfUserIsConnected(): void
+    {
+        // On vérifie que l'utilisateur est connecté.
+        if (!isset($_SESSION['user'])) {
+            Utils::redirect("connectionForm");
+        }
     }
 
 

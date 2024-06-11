@@ -1,18 +1,23 @@
 <?php
-    /**
-     * Template pour afficher le formulaire de connexion.
-     */
+/**
+ * Template pour afficher le formulaire de connexion.
+ */
 ?>
 
-<div class="connection-form">
+<div class="form-signin w-100 m-auto">
     <form action="index.php?action=connectUser" method="post" class="foldedCorner">
-        <h2>Connexion</h2>
-        <div class="formGrid">
-            <label for="login">Login</label>
-            <input type="text" name="login" id="login" required>
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" id="password" required>
-            <button class="submit">Se connecter</button>
-        </div>
+
+        <fieldset class="mb-3">
+            <label for="username">Your username</label>
+            <input type="text" class="form-control" name="username" id="username" required>
+        </fieldset>
+
+        <fieldset class="mb-3">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" id="password" required>
+        </fieldset>
+
+        <button class="btn btn-primary w-100 py-2 btn btn-success" type="submit">Se connecter</button>
+        <p class="mt-5 mb-3 text-body-secondary">Pas de compte ? <a href="index.php?action=suscribeForm">Inscrivez vous</a></p>
     </form>
 </div>

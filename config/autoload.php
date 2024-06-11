@@ -24,8 +24,8 @@ function autoloader($class)
         ''];
 
     foreach ($namespaces as $prefix) {
-        if (file_exists("$prefix/$class.php"))
-            require_once "$prefix/$class.php";
+        if (file_exists("$prefix\\$class.php"))
+            require_once "$prefix\\$class.php";
     }
 }
 

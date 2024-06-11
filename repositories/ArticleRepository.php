@@ -2,9 +2,6 @@
 
 namespace repositories;
 
-use models\entities\Article;
-use models\View;
-
 /**
  * Classe qui gère les articles.
  */

@@ -9,15 +9,20 @@ try {
     // Pour chaque action, on appelle le bon contrôleur et la bonne méthode.
     switch ($action) {
         // Pages accessibles à tous.
-           case 'welcome':
-               $adminController = new AdminController();
-               $adminController->welcome();
-               break;
+        case 'welcome':
+            $adminController = new WelcomeController();
+            $adminController->welcome();
+            break;
 
         // Section admin & connexion.
-        case 'admin':
+        case 'administration':
             $adminController = new AdminController();
             $adminController->showAdmin();
+            break;
+
+        case 'profile':
+            $adminController = new AdminController();
+            $adminController->showProfile();
             break;
 
         case 'connectionForm':
@@ -30,11 +35,24 @@ try {
             $adminController->connectUser();
             break;
 
+        case 'suscribeForm':
+            $adminController = new AdminController();
+            $adminController->displaySuscribeForm();
+            break;
+
+        case 'suscribeUser':
+            $adminController = new AdminController();
+            $adminController->suscribeUser();
+            break;
+
         case 'disconnectUser':
             $adminController = new AdminController();
             $adminController->disconnectUser();
             break;
-
+        // articles
+        case 'articles':
+            $articleController = new ArticleController();
+            $articleController->all();
         default:
             throw new Exception("La page demandée n'existe pas.");
     }

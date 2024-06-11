@@ -1,7 +1,5 @@
 <?php
 
-namespace services\commands;
-
 class Command
 {
     /**

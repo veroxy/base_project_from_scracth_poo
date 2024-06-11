@@ -9,6 +9,6 @@ define('MAIN_VIEW_PATH', TEMPLATE_LAYOUTS . 'app.php'); // Le chemin vers le tem
 define('TEMPLATE_VIEW_PATH', TEMPLATES_VIEWS . 'templates/'); // Le chemin vers les views 'home', 'administrattion', 'error'
 
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'blog_forteroche');
+define('DB_NAME', 'base_blog');
 define('DB_USER', 'root');
 define('DB_PASS', '');

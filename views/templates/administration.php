@@ -6,7 +6,7 @@
 ?>
 
 <!--<h2>Edition des articles</h2>-->
-<h2>Admin Monitoring</h2>
+<!--<h2>Admin Monitoring</h2>-->
 
 <table class="adminArticle">
     <tr class="articleHeaderLine">
