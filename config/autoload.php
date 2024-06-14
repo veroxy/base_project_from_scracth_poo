@@ -1,25 +1,67 @@
 <?php
-// autoload files
-//1. fonctions Utils / ft_
-//2. model class/entity
-//3. repositories
-//4. controllers
-//5. views
 
-spl_autoload_register(function ($className) {
-    if (file_exists('utils/' . $className . '.php')) {
-        require_once "utils/" . $className . '.php';
+namespace config;
+/**
+ * autoload files
+ *
+ * 1. fonctions services / ft_
+ * 2. models class/entity
+ * 3. repositories
+ * 4. controllers
+ * 5. views
+ */
+
+function autoloader($class)
+{
+    $namespaces = [
+        'services',
+        'repositories',
+        'controllers',
+        'views',
+        'views/layouts',
+        'views/layouts/templates',
+        'models',
+        ''];
+
+    foreach ($namespaces as $prefix) {
+        if (file_exists("$prefix\\$class.php")) {
+            $file = "$prefix\\$class.php";
+            var_dump($file);
+            die;
+//            require_once $file;
+        }
     }
-    if (file_exists('models/' . $className . '.php')) {
-        require_once "models/" . $className . '.php';
+}
+
+
+spl_autoload_register(function ($class) {
+    if (file_exists("models\\$class.php")) {
+        require_once "models\\$class.php";
     }
-    if (file_exists('repositories/' . $className . '.php')) {
-        require_once "repositories/" . $className . '.php';
+    if (file_exists("$class.php")) {
+        require_once "$class.php";
     }
-    if (file_exists('controllers/' . $className . '.php')) {
-        require_once "controllers/" . $className . '.php';
+    if (file_exists("services\\$class.php")) {
+        require_once "services\\$class.php";
     }
-    if (file_exists('views/' . $className . '.php')) {
-        require_once "views/" . $className . '.php';
+    if (file_exists("repositories\\$class.php")) {
+        require_once "repositories\\$class.php";
     }
+    if (file_exists("controllers\\$class.php")) {
+        require_once "controllers\\$class.php";
+    }
+    if (file_exists("views\\$class.php")) {
+        require_once "views\\$class.php";
+    }
+    if (file_exists("views\layouts\\$class.php")) {
+        require_once "views\layouts\\$class.php";
+    }
+    if (file_exists("views\layouts\templates\\$class.php")) {
+        require_once "views\layouts\templates\\$class.php";
+    }
+
+
 });
+
+
+//spl_autoload_register('config\autoloader');
