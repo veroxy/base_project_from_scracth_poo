@@ -21,14 +21,25 @@ class AdminController
     {
 
         // On vérifie que l'utilisateur est connecté.
-//        $this->checkIfUserIsConnected(); TOFIXED
+        $this->checkIfUserIsConnected();
 
         // On récupère les articles.
         $userRepo = new UserRepository();
         $user     = $userRepo->getUserById(1);
-
-        $view = new View('Profile');
+        $view     = new View('Profile');
         $view->render('profile', ['user' => $user]);
+    }
+
+    /**
+     * Vérifie que l'utilisateur est connecté.
+     * @return void
+     */
+    private function checkIfUserIsConnected(): void
+    {
+        // On vérifie que l'utilisateur est connecté.
+        if (!isset($_SESSION['user'])) {
+            Utils::redirect("connectionForm");
+        }
     }
 
     /**
@@ -39,7 +50,7 @@ class AdminController
     function showAdmin(): void
     {
         // On vérifie que l'utilisateur est connecté.
-//        $this->checkIfUserIsConnected(); TOFIXED
+        $this->checkIfUserIsConnected();
 
         // On récupère les articles.
         $articleRepository = new ArticleRepository();
@@ -167,7 +178,7 @@ class AdminController
      */
     public function showUpdateArticleForm(): void
     {
-//        $this->checkIfUserIsConnected(); TOFIXED
+        $this->checkIfUserIsConnected();
 
         // On récupère l'id de l'article s'il existe.
         $id = Utils::request("id", -1);
@@ -196,7 +207,8 @@ class AdminController
      * @return void
      */
     public function updateArticle(): void
-    {//        $this->checkIfUserIsConnected(); TOFIXED
+    {
+        $this->checkIfUserIsConnected();
 
 
         // On récupère les données du formulaire.
@@ -231,7 +243,7 @@ class AdminController
      */
     public function deleteArticle(): void
     {
-//        $this->checkIfUserIsConnected(); TOFIXED
+        $this->checkIfUserIsConnected();
 
 
         $id = Utils::request("id", -1);
@@ -251,7 +263,7 @@ class AdminController
     public
     function deleteComment(): void
     {
-//        $this->checkIfUserIsConnected(); TOFIXED
+        $this->checkIfUserIsConnected();
 
 
         $id = Utils::request("id", -1);
@@ -266,7 +278,7 @@ class AdminController
     public
     function orderBy(): void
     {
-//        $this->checkIfUserIsConnected(); TOFIXED
+        $this->checkIfUserIsConnected();
 
         $order = Utils::request("order", 'ASC');
         $col   = Utils::request("col", 'title');
@@ -277,18 +289,6 @@ class AdminController
         $view->render("administration", [
             'articles' => $articles
         ]);
-    }
-
-    /**
-     * Vérifie que l'utilisateur est connecté.
-     * @return void
-     */
-    private function checkIfUserIsConnected(): void
-    {
-        // On vérifie que l'utilisateur est connecté.
-        if (!isset($_SESSION['user'])) {
-            Utils::redirect("connectionForm");
-        }
     }
 
 

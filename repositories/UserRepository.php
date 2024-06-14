@@ -2,6 +2,7 @@
 
 namespace repositories;
 
+use repositories\AbstractEntityRepository;
 use models\entities\User;
 
 /**
@@ -20,9 +21,7 @@ class UserRepository extends AbstractEntityRepository
         $result = $this->db->query($sql, ['id' => $id]);
         $user   = $result->fetch();
         if ($user) {
-            $u = new User($user);
-            var_dump($u);
-            return $u;
+            return new User($user);
         }
         return null;
     }
@@ -45,8 +44,6 @@ class UserRepository extends AbstractEntityRepository
 
     public function addUser(User $user)
     {
-        var_dump($user);
-
         // On hash le mot de passe
         $hashPassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
 

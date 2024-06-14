@@ -1,6 +1,8 @@
 <?php
 
 namespace models\entities;
+use DateTime;
+use models\AbstractEntity;
 
 /**
  * Entité Article, un article est défini par les champs
@@ -15,7 +17,6 @@ class Article extends AbstractEntity
     private ?DateTime $dateUpdate   = null;
     private array|int $comments     = [];
     private ?int      $views        = null;
-    private string    $slug         = "";
 
     public function __construct(array $data = [])
     {
@@ -24,24 +25,11 @@ class Article extends AbstractEntity
         if ($data) {
             $this->setSlug($data['title']);
         }
+
+        foreach ($data as $property => $value) {
+            if (property_exists($this, $property)) {}
+        }
     }
-
-    public function getSlug(): string
-    {
-
-        return $this->slug;
-    }
-
-    public function setSlug(string $input): void
-    {
-        $textlower = isset($input) ? strtolower($input) : strtolower($this->title);
-        //convert special characters to normal
-        $utf8normal   = iconv('utf-8', 'ascii//TRANSLIT', $textlower);
-        $specialchars = preg_replace("/[:']/", '', $utf8normal);
-        $this->slug   = str_replace(' ', '_', $specialchars);
-
-    }
-
 
     public function getViews(): int
     {

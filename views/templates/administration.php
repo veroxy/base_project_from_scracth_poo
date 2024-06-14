@@ -5,65 +5,14 @@
  */
 ?>
 
-<!--<h2>Edition des articles</h2>-->
-<!--<h2>Admin Monitoring</h2>-->
 
 <table class="adminArticle">
     <tr class="articleHeaderLine">
-        <th class="t-cell title">title
-            <div class="tri">
-                <a class='asc'
-                   href='index.php?action=tri&order=ASC&col=title'
-                    ASC
-                </a>
-                <a class='desc'
-                   href='index.php?action=tri&order=DESC&col=title'
-                    DESC
-                </a>
-
-            </div>
-        </th>
-        <th class="t-cell content">short desc
-        </th>
-        <th class="t-cell">nb views
-            <div class="tri">
-                <a class='asc'
-                   href='index.php?action=tri&order=ASC&col=views'
-                    ASC
-                </a>
-                <a class='desc'
-                   href='index.php?action=tri&order=DESC&col=views'
-                    DESC
-                </a>
-
-            </div>
-        </th>
-        <th class="t-cell">nb commentaires
-            <div class="tri">
-                <a class='asc'
-                   href='index.php?action=tri&order=ASC&col=comments'
-                    ASC
-                </a>
-                <a class='desc'
-                   href='index.php?action=tri&order=DESC&col=comments'
-                    DESC
-                </a>
-
-            </div>
-        </th>
-        <th class="t-cell">date pubblication
-            <div class="tri">
-                <a class='asc'
-                   href='index.php?action=tri&order=ASC&col=date_creation'
-                    ASC
-                </a>
-                <a class='desc'
-                   href='index.php?action=tri&order=DESC&col=date_creation'
-                    DESC
-                </a>
-
-            </div>
-        </th>
+        <th class="t-cell ">photo</th>
+        <th class="t-cell ">title</th>
+        <th class="t-cell ">author</th>
+        <th class="t-cell">description</th>
+        <th class="t-cell">available</th>
         <th class="t-cell" colspan="3">actions</th>
     </tr>
     <?php foreach ($articles as $article) { ?>
@@ -73,15 +22,14 @@
             <td class="content"><?= $article->getContent(200) ?></td>
             <td class="other"
                 id="<?= 'page_views_' . $article->getSlug() ?>"><?= $article->getViews(); ?></td>
-            <td class="other"><?=$article->getComments() ?></td>
+            <td class="other"><?= $article->getComments() ?></td>
             <td class="other"><?= ucfirst(Utils::convertDateToFrenchFormat($article->getDateCreation())) ?></td>
-            <td class="action"><a class="submit"
-                                  href="index.php?action=showArticle&id=<?= $article->getId() ?>">voir</a></td>
-            <td class="action"><a class="submit"
-                                  href="index.php?action=showUpdateArticleForm&id=<?= $article->getId() ?>">Modifier</a>
+
+            <td class="action"><span class="pill rounded-pill border-danger"></span><a class="submit"
+                                  href="index.php?action=showUpdateArticleForm&id=<?= $article->getId() ?>">edit</a>
             </td>
             <td class="action"><a class="submit"
-                                  href="index.php?action=deleteArticle&id=<?= $article->getId() ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer cet article ?") ?> >Supprimer</a>
+                                  href="index.php?action=deleteArticle&id=<?= $article->getId() ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer cet article ?") ?> >delete</a>
             </td>
         </tr>
     <?php } ?>

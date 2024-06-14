@@ -53,6 +53,8 @@ try {
         case 'articles':
             $articleController = new ArticleController();
             $articleController->all();
+            break;
+
         default:
             throw new Exception("La page demandée n'existe pas.");
     }

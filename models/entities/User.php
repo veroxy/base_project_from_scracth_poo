@@ -2,11 +2,22 @@
 
 namespace models\entities;
 
-class User
+use models\AbstractEntity;
+
+class User extends AbstractEntity
 {
     private string $username;
     private string $email;
     private string $password;
+
+/*    public function __construct(array $data = [])
+    {
+        parent::__construct($data);
+
+        if ($data) {
+            $this->setSlug($data['title']);
+        }
+    }*/
 
     /**
      * @return string

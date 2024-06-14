@@ -95,13 +95,15 @@
     </header>
 
     <main class="d-flex align-items-center py-4 bg-body-tertiary">
+        <div class="container">
         <?= $content /* Ici est affiché le contenu réel de la page. */ ?>
+        </div>
     </main>
 
     <footer>
         <nav>
             <ul>
-                li*4>a[href="#" class=""]
+                li*4>a[href="#" class=""]A générer
             </ul>
         </nav>
     </footer>

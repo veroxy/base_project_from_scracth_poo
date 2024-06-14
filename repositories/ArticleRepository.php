@@ -1,6 +1,9 @@
 <?php
 
 namespace repositories;
+//
+use models\entities\Article;
+use PDOStatement;
 
 /**
  * Classe qui gère les articles.
@@ -13,8 +16,8 @@ class ArticleRepository extends AbstractEntityRepository
      */
     public function getAllArticles(): array
     {
-        $sql      = "SELECT * FROM article ORDER BY date_creation DESC";
-        $result   = $this->db->query($sql);
+        $sql    = "SELECT * FROM article ORDER BY date_creation DESC";
+        $result = $this->db->query($sql);
         $articles = $this->getComments($result);
         return $articles;
     }
@@ -28,6 +31,7 @@ class ArticleRepository extends AbstractEntityRepository
     {
         $commentRepository = new CommentRepository();
         while ($article = $result->fetch()) {
+
             $comments = $commentRepository->getAllCommentsByArticleId($article['id']);
             $post     = new Article($article);
             $post->setComments($comments);
